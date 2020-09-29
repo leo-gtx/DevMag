@@ -1,1 +1,1 @@
-web: php bin/console server:run
+web: heroku-php-apache2 public/
