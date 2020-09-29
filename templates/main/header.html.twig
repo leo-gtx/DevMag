@@ -1,0 +1,74 @@
+
+{% block  header %}
+     <header class="tech-header header">
+            <div class="container-fluid">
+                <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{path('accueil')}}"><img src="{{asset('images/DevMag Baniere-header.png')}}" with="100%" height="50px" alt="logo"></a>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('accueil')}}">{% trans %}Home{% endtrans %}</a>
+                            </li>
+                            <li class="nav-item dropdown has-submenu menu-large hidden-md-down hidden-sm-down hidden-xs-down">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans %}Articles{% endtrans %}</a>
+                                <ul class="dropdown-menu megamenu" aria-labelledby="dropdown01">
+                                    <li>
+                                        <div class="container">
+                                            <div class="mega-menu-content clearfix">
+                                                <div class="tab">
+                                                    {% for categorie in categories %}
+                                                        <a href="{{ path('articles_by_category', {'slug': categorie.slug}) }}"> <button class="tablinks">{{categorie.nom}}</button></a>
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="tab-details clearfix ">
+                                                  <div class="row">
+                                                  {% for motcle in motscles %}
+                                                    <h4 style="background-color:red;margin:4px;border-radius:4px;"><a href="{{ path('articles_by_keyword', {'slug':motcle.slug}) }}" style="color:white;" title="">{{motcle}}</a></h4>
+                                                    
+                                                  {% endfor %}
+                                                  </div>
+                                                  
+                                                </div><!-- end tab-details -->
+                                            </div><!-- end mega-menu-content -->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('tutorials')}}">{% trans %}Tutorials{% endtrans %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('contact')}}">{% trans %}Contact Us{% endtrans %}</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav mr-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('change_locale', {locale:'en'})}}">en</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:15px;" href="{{path('change_locale', {locale:'fr'})}}">fr</a>
+                            </li>
+                            <li class="nav-item">
+                                <!-- Button trigger modal -->
+                                
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <i class="fa fa-user-circle"></i> {{app.user.nom}}
+                                 </button>
+                                {% else %}
+                                 <a class="nav-link" style="font-size:15px;" href="{{path('app_login')}}"><i class="fa fa-podcast"></i> {% trans %}Subscribe{% endtrans %}</a>
+                                
+                                {% endif %}
+                                
+                               
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div><!-- end container-fluid -->
+        </header><!-- end market-header -->
+{% endblock %}

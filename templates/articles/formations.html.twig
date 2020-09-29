@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {% trans %}Tutorials{% endtrans %}{% endblock %}
+{% block body %}
+     <div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-play bg-orange"></i> 
+                        {% if articles|length > 1 %}
+                            {{articles|length}} {% trans %}Tutorials{% endtrans %} 
+                        {% else %}
+                            {{articles|length}} {% trans %}Tutorial{% endtrans %} 
+                        {% endif %} </h2>
+                    </div><!-- end col -->               
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+   <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-custom-build">
+                            {% for article in articles %}
+                                <div class="blog-box">
+                                    <div class="post-media">
+                                            <iframe 
+                                             width="800px" height="460px" 
+                                             src="{{article.preview}}" 
+                                             frameborder="0" 
+                                             control="0"
+                                             allowfullscreen>
+                                            </iframe>
+                                           
+                                            <!-- end hover -->
+                                    </div>
+                                    <!-- end media -->
+                                    <div class="blog-meta big-meta text-center">
+                                        <div class="post-sharing">
+                                            <ul class="list-inline">
+                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url('actualites_article', {'slug': article.slug}) }}" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">{% trans %}Share on Facebook{% endtrans %}</span></a></li>
+                                                <li><a href="https://twitter.com/intent/tweet?url={{ url('actualites_article', {'slug': article.slug}) }}" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">{% trans %}Tweet on Twitter{% endtrans %}</span></a></li>
+                                                
+                                            </ul>
+                                        </div><!-- end post-sharing -->
+                                        <h4><a href="{{ path('actualites_article', {'slug': article.slug}) }}" title="">{{article.titre}}</a></h4>
+                                        <p>{{article.overview}}</p>
+                                        <small><a href="#" title=""><i class="fa fa-clock-o"></i> {{article.createdAt|date}}</a></small>
+                                        <small><a href="#" title=""><i class="fa fa-user"></i> {{article.users.nom}}</a></small>
+                                        <small><a href="#" title=""><i class="fa fa-eye"></i> {{article.view}}</a></small>
+                                        {% if article.vip == true %}
+                                        <small><a href="#" title=""><i class="fa fa-check-circle"></i> Premium</a></small>
+                                        {% endif %}
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+
+                                <hr class="invis">
+                                {% endfor %}
+                            </div><!-- end blog-custom-build -->
+                        </div><!-- end page-wrapper -->
+
+                        <hr class="invis">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                               <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                       {{ knp_pagination_render(articles) }}
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                               {{ render(path('sidenav')) }}
+                    </div>
+                </div>
+            </div><!-- end container -->
+        </section>
+{% endblock %} 

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Register{% endtrans %}{% endblock %}
+
+{% block body %}
+ <div class="container" style="display:flex;justify-content:center;flex-direction:column;padding-top:70px;">
+    <div class="jumbotron">
+    <h1>{% trans %}Register{% endtrans %}</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+        <p>{% trans %}Do you agree above to accept DevMag’s{% endtrans %} <a href="{{path('terms_and_conditions')}}"> {% trans %}Terms{% endtrans %} </a> & <a href="{{path('privacy')}}">{% trans %}Privacy Policy{% endtrans %}</a>?</p>
+        <button class="btn">{% trans %}Sign up{% endtrans %}</button>
+    {{ form_end(registrationForm) }}
+    </div>
+    </div>
+{% endblock %}

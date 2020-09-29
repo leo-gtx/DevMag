@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | {% trans %}Plans{% endtrans %} {% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<style>
+body {
+    /*background: #FF6347*/
+    
+}
+
+.dots {
+    height: 7px;
+    width: 7px;
+    margin-left: 0px;
+    margin-right: 6px;
+    margin-bottom: -2px !important;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    display: inline-block
+}
+
+@media (max-width: 300px) {
+    .pro {
+        margin-top: 40px
+    }
+}
+</style>
+{% endblock %}
+{% block body %}
+<section clas="section wb" style="padding-top:100px; padding-bottom:100px;">
+<h1 class="display-5 text-center">Get unlimited access to everything on DevMag</h1>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-8">
+                <div class="row  p-4 text-white rounded px-5 py-5" style="background-color:#2F3B59;">
+                    <div class="col-md-6">
+                        <h1 style="color:white;">Monthly</h1>
+                        <div class="pricing"><span class="d-block">3000XAF/month</span><span>Become a DevMag's Member</span></div>
+                        <div class="specifications mt-4">
+                            <div class="d-flex flex-row align-items-center"><span class="dots"></span><span>Unlimited Access to our formations</span></div>
+                            <div class="d-flex flex-row align-items-center"><span class="dots"></span><span>30 days</span></div>
+                        </div><a href="{{path('plans_month')}}" class="btn btn-outline-danger mt-4 px-5" type="button">Start Monthly</a>
+                    </div>
+                    <div class="col-md-6 pro">
+                        <h1 style="color:white;">Yearly</h1>
+                        <div class="pricing"><span class="d-block">30000XAF/year</span><span>Become a DevMag's Member</span></div>
+                        <div class="specifications mt-4">
+                            <div class="d-flex flex-row align-items-center"><span class="dots"></span><span>Unlimited Access to our formations</span></div>
+                            <div class="d-flex flex-row align-items-center"><span class="dots"></span><span>2 free months</span></div>
+                            <div class="d-flex flex-row align-items-center"><span class="dots"></span><span>Save 6000XAF</span></div>
+                        </div><a href="{{path('plans_year')}}" class="btn btn-danger mt-4 px-5" type="button">Start Yearly</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    
+  
+</section>
+{% endblock %}

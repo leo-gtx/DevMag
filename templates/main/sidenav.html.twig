@@ -1,0 +1,95 @@
+{% block sidenav %}
+                                <div class="sidebar">
+                                    <div class="widget">
+                                        <div class="banner-spot clearfix">
+                                            <div class="banner-img">
+                                                <!--Advertising-->
+                                            </div><!-- end banner-img -->
+                                        </div><!-- end banner -->
+                                    </div><!-- end widget -->
+
+                                    <div class="widget">
+                                        <h2 class="widget-title">{% trans %}Advertising{% endtrans %}</h2>
+                                        <div class="trend-videos">
+                                            <div class="blog-box">
+                                               
+                                            </div><!-- end blog-box -->
+
+                                            <hr class="invis">
+
+                                          
+                                        </div><!-- end videos -->
+                                    </div><!-- end widget -->
+
+                                    <div class="widget">
+                                        <h2 class="widget-title">{% trans %}Popular Articles{% endtrans %}</h2>
+                                        <div class="blog-list-widget">
+                                            <div class="list-group">
+                                                {% for popular in populars %}
+                                                     <a href="{{ path('actualites_article', {'slug': popular.slug}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                        <div class="w-100 justify-content-between">
+                                                            <img src="{{ vich_uploader_asset(popular, 'imageFile')|imagine_filter('reduc')  }}" alt="" class="img-fluid float-left">
+                                                            <h5 class="mb-1">{{popular.titre}}</h5>
+                                                             <small><i class="fa fa-eye">{{popular.view}}</i></small>
+                                                        
+                                                        </div>
+                                                    </a>
+                                                {% endfor %}
+                                               
+                                            </div>
+                                        </div><!-- end blog-list -->
+                                    </div><!-- end widget -->
+
+                                    <div class="widget">
+                                        <h2 class="widget-title">{% trans %}Recents Articles{% endtrans %}</h2>
+                                        <div class="blog-list-widget">
+                                            <div class="list-group">
+                                            {% for recent in recents %}
+                                                 <a href="{{ path('actualites_article', {'slug': recent.slug}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div class="w-100 justify-content-between">
+                                                        <img src="{{ vich_uploader_asset(recent, 'imageFile')|imagine_filter('reduc')  }}" alt="" class="img-fluid float-left">
+                                                        <h5 class="mb-1">{{recent.titre}}</h5>
+                                                        <small>{{ recent.createdAt|date }}</small>
+                                                        
+                                                        
+                                                    </div>
+                                                </a>
+                                                
+                                            {% endfor %}
+                                            
+                                            </div>
+                                        </div><!-- end blog-list -->
+                                    </div><!-- end widget -->
+
+                                    <div class="widget">
+                                        <h2 class="widget-title">{% trans %}Follow Us{% endtrans %}</h2>
+
+                                        <div class="row text-center">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                <a href="https://www.facebook.com/DevMagBlog" class="social-button facebook-button">
+                                                    <i class="fa fa-facebook"></i>
+                                                    
+                                                </a>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                <a href="https://t.me/devmag237" class="social-button twitter-button">
+                                                    <i class="fa fa-telegram"></i>
+                                                </a>
+                                            </div>
+
+                                          
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                <a href="https://www.youtube.com/channel/UCFauj-07WcTfyAxbVs8xLXw" class="social-button youtube-button">
+                                                    <i class="fa fa-youtube"></i>
+                                                  
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div><!-- end widget -->
+
+                                  
+                                
+                                </div>
+                          
+{% endblock %}

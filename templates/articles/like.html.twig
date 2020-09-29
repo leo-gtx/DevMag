@@ -1,0 +1,6 @@
+{% block like %}
+    <a href="{{path('article_like', {'slug':article.slug})}}" data-toggle="tooltip" data-placement="top" title="+1">
+       <h2 style="color:#FF6347;"><i class="fa fa-sign-language"></i> <small>{{article.likes}}</small></h2>
+    </a>
+    
+{% endblock %}

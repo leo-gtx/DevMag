@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="2lTOrMA" resname="Article published successfully">
+        <source>Article published successfully</source>
+        <target>Article publié avec succès</target>
+      </trans-unit>
+      <trans-unit id="NV958p1" resname="Comments">
+        <source>Comments</source>
+        <target>Commentaires</target>
+      </trans-unit>
+      <trans-unit id="wlP0Ub3" resname="Reply">
+        <source>Reply</source>
+        <target>Répondre</target>
+      </trans-unit>
+      <trans-unit id="yI_2nGG" resname="Leave a reply">
+        <source>Leave a reply</source>
+        <target>Laissez un commentaire</target>
+      </trans-unit>
+      <trans-unit id="Nubvqtr" resname="There's no comment yet">
+        <source>There's no comment yet</source>
+        <target>Il n'y a pas encore de commentaire</target>
+      </trans-unit>
+      <trans-unit id="0iUhajp" resname="Published by">
+        <source>Published by</source>
+        <target>__Published by</target>
+      </trans-unit>
+      <trans-unit id="nYJcIfB" resname="Articles list">
+        <source>Articles list</source>
+        <target>Liste des articles</target>
+      </trans-unit>
+      <trans-unit id="O0P7EyP" resname="Leave a Reply">
+        <source>Leave a Reply</source>
+        <target>__Leave a Reply</target>
+      </trans-unit>
+      <trans-unit id="OnhpU4i" resname="Home">
+        <source>Home</source>
+        <target>__Home</target>
+      </trans-unit>
+      <trans-unit id="sUrHikb" resname="Articles">
+        <source>Articles</source>
+        <target>__Articles</target>
+      </trans-unit>
+      <trans-unit id="BOKpcor" resname="Projects">
+        <source>Projects</source>
+        <target>__Projects</target>
+      </trans-unit>
+      <trans-unit id="mLZwY8_" resname="Contact Us">
+        <source>Contact Us</source>
+        <target>__Contact Us</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | {% trans %}Plans{% endtrans %} {% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<style>
+body {
+    background: #f5f5f5
+}
+
+.rounded {
+    border-radius: 1rem
+}
+
+.nav-pills .nav-link {
+    color: #555
+}
+
+.nav-pills .nav-link.active {
+    color: white
+}
+
+input[type="radio"] {
+    margin-right: 5px
+}
+
+.bold {
+    font-weight: bold
+}
+</style>
+{% endblock %}
+{% block body %}
+<section clas="section wb" style="padding-top:100px;">
+    <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs-down hidden-sm-down">
+                       {% for message in app.flashes('message') %}
+                             <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div><!-- end col --> 
+                </div>
+    <div class="container py-5">
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-5">{{plan}}</h1>
+        </div>
+    </div> <!-- End -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                        <!-- Credit card form tabs -->
+                        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                            <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fa fa-credit-card mr-2"></i> Debit / Credit Card </a> </li>
+                            <!--<li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fa fa-paypal mr-2"></i> Paypal </a> </li>-->
+                            <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fa fa-mobile mr-2"></i> MTN MoMo Pay</a> </li>
+                        </ul>
+                    </div> <!-- End -->
+                    <!-- Credit card form content -->
+                    <div class="tab-content">
+                        <!-- credit card info-->
+                        <div id="credit-card" class="tab-pane fade show active pt-3">
+                            <div class="row justify-content-center">
+                                    <img src="{{asset('images/stripe.png')}}" height="150px" width="300px" alt="Visa/Master card"/>
+                            </div>
+                            <form role="form" method="post">
+                                   <div class="form-group">
+                                        <label for="card-element">
+                                        Credit or debit Card
+                                        </label>
+                                        <div id="card-element" class="form-control">
+                                        </div>
+                                        <div id="card-errors" role="alert"></div>
+                                    </div>
+                                                                    
+                                <div class="card-footer"><button class="btn btn-primary col-12">Confirm Payment</button>
+                            </form>
+                            <p class="text-muted">NB: Your bank can take additionnal cost for international's transaction</p>
+                        </div>
+                    </div> <!-- End -->
+                    <!-- Paypal info -->
+                    <!--<div id="paypal" class="tab-pane fade pt-3">
+                        <h6 class="pb-2">Select your paypal account type</h6>
+                        <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
+                        <p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p>
+                        <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                    </div>--> <!-- End -->
+                    <!-- bank transfer info -->
+                    <div id="net-banking" class="tab-pane fade pt-3">
+                         <div class="row justify-content-center">
+                                    <img src="{{asset('images/mtn.jpg')}}" height="150px" width="300px" alt="Visa/Master card"/>
+                        </div>
+                        <div class="form-row"> 
+                        
+                        <form role="form" method="get">
+                        <div class="form-group">
+                                        <label for="phone">
+                                        Phone Number
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                            <input id="phone" type="tel" class="form-control" name="phone" placeholder="Enter your phone number" required>
+                                        </div>
+                                        <div id="card-errors" role="alert"></div>
+                                    </div>
+                        
+                        </div>
+                        <div class="form-group">
+                            <p> <button type="submit" class="btn btn-primary col-12"><i class="fa fa-mobile-phone mr-2"></i> Proceed Payment</button> </p>
+                        </div>
+                        </form>
+                        <p class="text-muted">Note: After clicking on the button, you will received a confirmation request on your phone. After this if you approve the request and everything is ok your payment will be effective. </p>
+                    </div> <!-- End -->
+                    <!-- End -->
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</section>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe =  Stripe('pk_test_51HRzZlC5Xs2rXclNQIk1loXIroqkKVxxVSXwze4FOFzudEkpkiRa3UCM0BSfueCsIjvzRTsx3hXLIOndFIFNQ4PI00xpdsyEHS');
+    var elements = stripe.elements();
+    var style = {
+        base:{
+            fontSize: '16px',
+            lineHeight: '24px'
+        }
+    };
+    var card = elements.create('card', {style: style});
+    card.mount('#card-element');
+    card.addEventListener('change', function(event){
+        var displayError = document.getElementById('card-errors');
+        if (event.error){
+            displayError.textContent = event.error.message;
+        }else{
+            displayError.textContent = '';
+        }
+    });
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        stripe.createToken(card).then(function(result){
+            if (result.error){
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            }else{
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+    function stripeTokenHandler(token){
+        var form =  document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type','hidden');
+        hiddenInput.setAttribute('name','stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        //submit form
+        form.submit();
+    }
+
+</script>
+{% endblock %}

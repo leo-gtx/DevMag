@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | {% trans %}Home{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="section first-section">
+            <div class="container-fluid">
+                <div class="masonry-blog clearfix">
+                    
+                    {% for article in tendances %}
+                        
+                        <div class="last-slot">
+                        <div class="masonry-box post-media">
+                             <img src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('reduc')  }}" alt="image">
+                             <div class="shadoweffect">
+                                <div class="shadow-desc">
+                                    <div class="blog-meta">
+                                        {% for categorie in article.categories %}
+                                            <span class="bg-orange"><a href="{{ path('articles_by_category', {'slug': categorie.slug}) }}" title="">{{categorie.nom}}</a></span>
+                                        {% endfor %}
+                                        
+                                        <h4><a href="{{ path('actualites_article', {'slug': article.slug}) }}">{{ article.titre }}</a></h2></h4>
+                                        <small><a href="#"><i class="fa fa-clock-o"></i> {{ article.createdAt|date }}</a></small>
+                                        <small><a href="#"><i class="fa fa-user"></i> {{ article.users.nom}}</a></small>
+                                        {% if article.vip == true %}
+                                        <small><a href="#" title=""><i class="fa fa-check-circle"></i> Premium</a></small>
+                                        {% endif %}
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                            <small><a href="{{path('article_add_bookmark', {'slug':article.slug}) }}">
+                                            {% if article in  app.user.bookmarks %}
+                                            <i class="fa fa-bookmark fa-lg" data-toggle="tooltip" data-placement="top" title="Remove to Bookmark"></i>
+                                            {% else %}
+                                            <i class="fa fa-bookmark-o fa-lg" data-toggle="tooltip" data-placement="top" title="Add to Bookmark"></i>
+                                            {% endif %}
+                                            </a></small>
+                                        {% endif %}
+                                     
+                                        
+                                    </div><!-- end meta -->
+                                </div><!-- end shadow-desc -->
+                             </div><!-- end shadow -->
+                        </div><!-- end post-media -->
+                    </div><!-- end second-side -->
+                    {% endfor %}
+                   
+                </div><!-- end masonry -->
+            </div>
+        </section>
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+        </div>
+    {% endfor %}
+    {#<h1>{% trans %}Articles list{% endtrans %}</h1>#}
+     <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-top clearfix">
+                                <h4 class="pull-left">{% trans %}All Articles{% endtrans %} <a href="#"><i class="fa fa-rss"></i></a></h4>
+                            </div><!-- end blog-top -->
+                            {% for article in articles %}
+                                <div class="blog-list clearfix">
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{{ path('actualites_article', {'slug': article.slug}) }}" title="">
+                                                <img src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('reduc')  }}" alt="">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+
+                                    <div class="blog-meta big-meta col-md-8">
+                                       <h4><a href="{{ path('actualites_article', {'slug': article.slug}) }}">{{ article.titre }}</a></h4>
+                                        <p>{{article.overview}}</p>
+                                        
+                                         {% for categorie in article.categories %}
+                                            <span class="bg-orange"><a href="{{ path('articles_by_category', {'slug': categorie.slug}) }}">{{categorie.nom}}</a></span>
+                                        {% endfor %}
+                                        <small><a href="#" title=""><i class="fa fa-clock-o"></i> {{ article.createdAt|date}}</a></small>
+                                        <small><a href="#" title=""><i class="fa fa-user"></i> {{ article.users.nom}}</a></small>
+                                        <small><a href="#" title=""><i class="fa fa-eye"></i> {{article.view}}</a></small>
+                                        {% if article.vip == true %}
+                                        <small><a href="#" title=""><i class="fa fa-check-circle"></i> Premium</a></small>
+                                        {% endif %}
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                             <small><a href="{{path('article_add_bookmark', {'slug':article.slug}) }}">
+                                            {% if article in  app.user.bookmarks %}
+                                            <i class="fa fa-bookmark fa-2x" data-toggle="tooltip" data-placement="top" title="Remove to Bookmark"></i>
+                                            {% else %}
+                                            <i class="fa fa-bookmark-o fa-2x" data-toggle="tooltip" data-placement="top" title="Add to Bookmark"></i>
+                                            {% endif %}
+                                            </a></small>
+                                        {% endif %}
+                                        <div class="tag-cloud-single">
+                                            <span>Tags</span>
+                                            {% for keyword in article.motsCles %}
+                                                <small>{{keyword}}</small>
+                                            {% endfor %}
+                                        </div>
+                                </div><!-- end meta -->
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+
+                                <hr class="invis">
+                            {% endfor %}
+                     
+
+                        
+                        
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                       {{ knp_pagination_render(articles) }}
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                               {{ render(path('sidenav')) }}
+                    </div>
+                </div>
+
+            </div><!-- end container -->
+    </section>
+       
+   
+
+
+{% endblock %}

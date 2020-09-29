@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="container" style="display:flex;justify-content:center;flex-direction:column;padding-top:70px;">
+     {% for message in app.flashes('message') %}
+        {{ message }}
+{% endfor %}
+{% for message in app.flashes('danger') %}
+        {{ message }}
+{% endfor %}
+{% for message in app.flashes('warning') %}
+        {{ message }}
+{% endfor %}
+    <div class="jumbotron">
+
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="checkbox mb-3">{% trans %}You are logged in as{% endtrans %} {{ app.user.username }}, <a href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
+        {% else %}
+         
+    <h1>{% trans %}Please sign in, else if your are not subscribe yet{% endtrans %} <a style="color:#0091e5;" href="{{path('app_register')}}"> {% trans %}Sign up{% endtrans %}</a></h1>
+   
+    
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+    <label for="inputPassword">{% trans %}Password{% endtrans %}</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}">
+            {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+        #}
+        
+            <label>
+                <input type="checkbox" name="_remember_me"> {% trans %}Remember me{% endtrans %}
+            </label>
+        
+
+        <h5><a style="color:#0091e5;" href="{{path('app_forgotten_password')}}">{% trans %}Password forgoted{% endtrans %}<i class="fa fa-question"></i></a></h5> 
+    
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        {% trans %} Sign in {% endtrans %}
+    </button>
+    {% endif %}
+
+   
+</form>
+ </div>
+    </div>
+    </div>
+
+{% endblock %}

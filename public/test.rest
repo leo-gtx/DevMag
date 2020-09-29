@@ -1,0 +1,9 @@
+POST https://beta.writecode.fr/contact
+
+{
+    "contact[firstname]": "Coucou",
+    "contact[lastname]": "Ca va ?",
+    "contact[email]": "a@b.c",
+    "contact[message]": "Moi ça va, et toi ?",
+    "contact[contact[_token]]": "TQB3tkugxK3drWqk2fXFcRFd-9GJfHmaeK6yXTyn54g"
+}

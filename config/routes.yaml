@@ -1,0 +1,39 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+app_logout:
+    path: /logout
+    methods: GET
+
+articles_by_category:
+    path: /articles/categorie/{slug}
+    controller: App\Controller\ArticleController::articlesByCategory
+
+articles_by_keyword:
+    path: /articles/tags/{slug}
+    controller: App\Controller\ArticleController::articlesByKeyword
+
+article_like:
+    path: /articles/like/{slug}
+    controller: App\Controller\ArticleController::like
+
+article:
+    path: /articles/{slug}
+    controller: App\Controller\ArticleController::article
+
+article_add_bookmark:
+    path: /articles/bookmark/{slug}
+    controller: App\Controller\ArticleController::addBookmark
+
+
+edition_article:
+    path: /articles/article/editer/{slug}
+    controller: App\Controller\ArticleController::edition
+    
+ajout_article:
+    path: /articles/article/ajouter
+    controller: App\Controller\ArticleController::ajout
+
+tutorials:
+    path: /articles/tutorials/preview
+    controller: App\Controller\ArticleController::preview

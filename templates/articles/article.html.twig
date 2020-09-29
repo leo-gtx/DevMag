@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+   <section class="section single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-title-area text-center">
+                                {% for message in app.flashes('message') %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                                {% for categorie in article.categories %}
+                                    <span class="color-orange"> <a href="{{ path('articles_by_category', {'slug': categorie.slug}) }}">{{ categorie.nom }}</a></span>
+                                {% endfor %}
+
+
+                                <h3>{{ article.titre }}</h3>
+
+                                <div class="blog-meta big-meta">
+                                    <small>{{ article.createdAt|date }}</small>
+                                    <small><i class="fa fa-user"></i> {{ article.users.email}}</small>
+                                    <small><i class="fa fa-eye"></i> {{ article.view}}</small>
+                                     <small><i class="fa fa-comment"></i> {{ commentaires|length }}</small>
+                                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                            <small><a href="{{path('article_add_bookmark', {'slug':article.slug}) }}">
+                                            {% if article in  app.user.bookmarks %}
+                                            <i class="fa fa-bookmark fa-2x" data-toggle="tooltip" data-placement="top" title="Remove to Bookmark"></i>
+                                            {% else %}
+                                            <i class="fa fa-bookmark-o fa-2x" data-toggle="tooltip" data-placement="top" title="Add to Bookmark"></i>
+                                            {% endif %}
+                                            </a></small>
+                                        {% endif %}
+                                     
+                                </div><!-- end meta -->
+
+                               
+                                {{include('articles/like.html.twig')}}
+                               
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url('actualites_article', {'slug': article.slug}) }}" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">{% trans %}Share on Facebook{% endtrans %}</span></a></li>
+                                        <li><a href="https://twitter.com/intent/tweet?url={{ url('actualites_article', {'slug': article.slug}) }}" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">{% trans %}Tweet on Twitter{% endtrans %}</span></a></li>
+                                    </ul>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            <div class="single-post-media">
+                               <img src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article') }}"  alt="{{article.titre}}">
+                            </div><!-- end media -->
+
+                            <div class="blog-content">  
+                               {{ article.contenu|raw }}
+                            </div><!-- end content -->
+
+                            <div class="blog-title-area">
+                                <div class="tag-cloud-single">
+                                    <span>Tags</span>
+                                    {% for keyword in article.motsCles %}
+                                        <small>{{keyword}}</small>
+                                    {% endfor %}
+                                </div><!-- end meta -->
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                         <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url('actualites_article', {'slug': article.slug}) }}" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">{% trans %}Share on Facebook{% endtrans %}</span></a></li>
+                                        <li><a href="https://twitter.com/intent/tweet?url={{ url('actualites_article', {'slug': article.slug}) }}" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">{% trans %}Tweet on Twitter{% endtrans %}</span></a></li>
+                                    </ul>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            
+                            <hr class="invis1">
+                            {% if article.prev or article.next %}
+                            <div class="custombox prevnextpost clearfix">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        {% if article.prev %}
+                                        <div class="blog-list-widget">
+                                            <div class="list-group">
+                                                <a href="{{ path('actualites_article', {'slug': article.prev.slug}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div class="w-100 justify-content-between text-right">
+                                                        <img src="{{ vich_uploader_asset(article.prev, 'imageFile')|imagine_filter('article') }}" alt="" class="img-fluid float-right">
+                                                        <h5 class="mb-1">{{article.prev.titre}}</h5>
+                                                        <small>{% trans %}Prev Post{% endtrans %}</small>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div><!-- end col -->
+
+                                    <div class="col-lg-6">
+                                        {% if article.next %}
+                                        <div class="blog-list-widget">
+                                            <div class="list-group">
+                                                <a href="{{ path('actualites_article', {'slug': article.next.slug}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div class="w-100 justify-content-between">
+                                                        <img src="{{ vich_uploader_asset(article.next, 'imageFile')|imagine_filter('article') }}" alt="" class="img-fluid float-left">
+                                                        <h5 class="mb-1">{{article.next.titre}}</h5>
+                                                        <small>{% trans %}Next Post{% endtrans %}</small>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end author-box -->
+                            {% endif %}
+                            <hr class="invis1">
+
+                            
+
+                            <hr class="invis1">
+                            {% if relatedArticles|length > 0 %}
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">{% trans %}You may also like{% endtrans %}</h4>
+                                <div class="row">
+                                    {% for article in relatedArticles %}
+                                    <div class="col-lg-6">
+                                        <div class="blog-box">
+                                            <div class="post-media">
+                                                <a href="{{ path('actualites_article', {'slug': article.slug}) }}" title="">
+                                                    <img src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('reduc') }}" alt="" class="img-fluid">
+                                                    <div class="hovereffect">
+                                                        <span class=""></span>
+                                                    </div><!-- end hover -->
+                                                </a>
+                                            </div><!-- end media -->
+                                            <div class="blog-meta">
+                                                <h4><a href="{{ path('actualites_article', {'slug': article.slug}) }}" title="">{{article.titre}}</a></h4>
+                                                <small><a href="" title="">{{article.users.nom}}</a></small>
+                                                <small><a href="" title="">{{ article.createdAt|date }}</a></small>
+                                            </div><!-- end meta -->
+                                        </div><!-- end blog-box -->
+                                    </div><!-- end col -->
+                                    {% endfor %}
+                                </div><!-- end row -->
+                            </div><!-- end custom-box -->
+                            {% endif %}
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">{{commentaires|length}} {% trans %}Comments{% endtrans %}</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comments-list">
+                                            
+                                            {% for commentaire in commentaires %}
+                                                <div class="media">
+                                                    <a class="media-left" href="#">
+                                                        <img src="{{asset('images/User.png')}}" alt="" class="rounded-circle">
+                                                    </a>
+                                                    <div class="media-body">
+
+                                                        <h4 class="media-heading user_name">{{commentaire.pseudo}} <small>{{ commentaire.createdAt|date }}</small></h4>
+
+                                                        <p>{{ commentaire.contenu }}</p>
+
+                                                        <a href="#" class="btn btn-primary btn-sm">{% trans %}Reply {% endtrans %}</a>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <p>{% trans %}There's no comment yet{% endtrans %}</p>
+                                            {% endfor %}
+                                           
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end custom-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">{% trans %}Leave a Reply{% endtrans %}</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                       {{ form(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end page-wrapper -->
+                    </div><!-- end col -->
+
+                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                               {{ render(path('sidenav')) }}
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+    
+{% endblock %}

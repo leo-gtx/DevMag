@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Add article{% endtrans %}{% endblock %}
+
+{% block body %}
+<section class="container" style="margin-top:100px;">
+ {% for message in app.flashes('message') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+        </div>
+    {% endfor %}
+  <div id="accordion" >
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link active" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa fa-list"></i> {% trans %}My articles{% endtrans %}
+                                </button>
+                            </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">Article</th>
+                                                    <th scope="col">{% trans %}Open{% endtrans %}</th>
+                                                    <th scope="col">{% trans %}Edit{% endtrans %}</th>
+                                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                        {% for article in app.user.articles %}
+                                                        <tr>
+                                                        <td>{{article.titre}}</td>
+                                                        <td><a href="{{path('article',{'slug':article.slug})}}" class="btn"><i class="fa fa-external-link"></i></a></td>
+                                                        <td><a href="{{path('edition_article', {'slug': article.slug})}}" class="btn"><i class="fa fa-edit"></i></a></td>
+                                                        
+                                                        </tr>
+                                                        {% endfor %}
+                                                    
+                                                    </tr>
+                                                    <tr>
+                                                
+                                                </tbody>
+                                                </table>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="fa fa-edit"></i> {% trans %}Editor{% endtrans %}
+                                </button>
+                            </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                            {% if app.request.get('slug') is defined %}
+                                <h1>{% trans %}Edit an article or{% endtrans %} <a href="{{path('ajout_article')}}" class="btn"> {% trans %}Add new article{% endtrans %}</a></h1>
+                            {% else %}
+                                <h1>{% trans %}Add an article{% endtrans %}</h1>
+                            {% endif %}
+                               
+                                {{ form(articleForm) }}
+                            </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+    </section>
+{% endblock %}
