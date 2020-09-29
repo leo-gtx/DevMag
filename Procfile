@@ -1,2 +1,2 @@
-web: php bin/console server:run
+web: php bin/console server:start
 
