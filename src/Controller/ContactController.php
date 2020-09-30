@@ -21,7 +21,7 @@ class ContactController extends AbstractController
             $contact = $form->getData();
 
             // On crée le message
-            $message = (new \Swift_Message('Nouveau contact'))
+            $message = (new \Swift_Message('DevMag Contact'))
                 // On attribue l'expéditeur
                 ->setFrom($contact['email'])
                 // On attribue le destinataire
