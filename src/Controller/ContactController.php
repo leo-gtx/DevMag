@@ -25,7 +25,7 @@ class ContactController extends AbstractController
                 // On attribue l'expéditeur
                 ->setFrom($contact['email'])
                 // On attribue le destinataire
-                ->setTo('votre@adresse.fr')
+                ->setTo($this->getParameter('app.address'))
                 // On crée le texte avec la vue
                 ->setBody(
                     $this->renderView(
