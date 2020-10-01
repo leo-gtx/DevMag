@@ -52,11 +52,14 @@ DirectoryIndex index.php
     # We only want to let Apache serve files and not directories.
     # Rewrite all other queries to the front controller.
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ %{ENV:BASE}/index.php [L]
+    RewriteRule ^ https://%{ENV:BASE}/index.php [L]
+    #Force route HTTPS
+    #RewriteCond %{HTTPS} off
+    #RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    #RewriteCond %{HTTP_HOST} !^www\. [NC]
+    #RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Force route HTTPS
-    RewriteCond %{HTTPS} off
-    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
 </IfModule>
 
 <IfModule !mod_rewrite.c>
