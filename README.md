@@ -20,5 +20,4 @@ Go to mysql and create the database "monblog"
 run command: php bin/console doctrine:schema:update
 run command: php bin/console server:run
 
-##Enjoy
-Feel free to use this for your own purpose
+## Enjoy and Feel free to use this for your own purpose
