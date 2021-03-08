@@ -20,3 +20,5 @@ these are the functionnalities:
 - run command: php bin/console server:run
 
 ### Enjoy and Feel free to use this for your own purpose
+
+Check it on: https://devmagblog.herokuapp.com/
