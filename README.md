@@ -7,6 +7,7 @@ these are the functionnalities:
 - Editor space for that allows other to publish their own articles
 - Contact page where user can contact you
 - User can add article to favorite
+- Multilanguage (Englis and French)
 - Paypal Checkout to access vip articles
 - SEO implemented
 ## Requirements
